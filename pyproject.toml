@@ -1,0 +1,17 @@
+[project]
+name = "grok-new-api"
+version = "0.1.0"
+description = "Grok API Server"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "curl_cffi",
+    "coincurve",
+    "beautifulsoup4",
+    "pydantic",
+    "colorama"
+]
+
+[project.scripts]
+app = "api_server:app"

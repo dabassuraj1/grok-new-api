@@ -1,19 +1,16 @@
 {
   "version": 2,
-  "functions": {
-    "api/chat.js": {
-      "memory": 1024,
-      "maxDuration": 60
+  "builds": [
+    {
+      "src": "api_server.py",
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.9" }
     }
-  },
+  ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/api/index"
+      "dest": "api_server.py"
     }
   ]
 }
