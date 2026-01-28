@@ -47,7 +47,11 @@ class Parser:
                 numbers: list = Parser.mapping[script_link]
                 
             else:
-                script_content: str = requests.get(script_link, impersonate="chrome136").text
+                # Try to use the same impersonation as the main session, fallback to chrome124
+                try:
+                    script_content: str = requests.get(script_link, impersonate="chrome124").text
+                except:
+                    script_content: str = requests.get(script_link, impersonate="chrome120").text
                 numbers: list = [int(x) for x in findall(r'x\[(\d+)\]\s*,\s*16', script_content)]
                 Parser.mapping[script_link] = numbers
                 with open('core/mappings/txid.json', 'w') as f:
@@ -78,7 +82,11 @@ class Parser:
                 return index["actions"], index["xsid_script"]
             
         for script in scripts:
-            content: str = requests.get(f'https://grok.com{script}', impersonate="chrome136").text
+            # Try to use the same impersonation as the main session, fallback to chrome124
+            try:
+                content: str = requests.get(f'https://grok.com{script}', impersonate="chrome124").text
+            except:
+                content: str = requests.get(f'https://grok.com{script}', impersonate="chrome120").text
             if "anonPrivateKey" in content:
                 script_content1: str = content
                 action_script: str = script

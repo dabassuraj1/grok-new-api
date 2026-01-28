@@ -105,7 +105,16 @@ async def chat_endpoint(request: ConversationRequest):
             "jailbreak_used": jailbreak_used
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+        # More detailed error handling for debugging
+        error_msg = str(e)
+        if "impersonating" in error_msg.lower() or "chrome" in error_msg.lower():
+            error_msg = "Browser impersonation failed. Please try again later."
+        elif "connection" in error_msg.lower() or "timeout" in error_msg.lower():
+            error_msg = "Connection error. Please check your network or proxy settings."
+        elif "anti-bot" in error_msg.lower():
+            error_msg = "Request rejected by anti-bot system. Please try again later."
+
+        raise HTTPException(status_code=500, detail=f"Error: {error_msg}")
 
 @app.post("/ask")  # Legacy endpoint for backward compatibility
 async def create_conversation(request: ConversationRequest):
@@ -122,7 +131,16 @@ async def create_conversation(request: ConversationRequest):
             **answer
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+        # More detailed error handling for debugging
+        error_msg = str(e)
+        if "impersonating" in error_msg.lower() or "chrome" in error_msg.lower():
+            error_msg = "Browser impersonation failed. Please try again later."
+        elif "connection" in error_msg.lower() or "timeout" in error_msg.lower():
+            error_msg = "Connection error. Please check your network or proxy settings."
+        elif "anti-bot" in error_msg.lower():
+            error_msg = "Request rejected by anti-bot system. Please try again later."
+
+        raise HTTPException(status_code=500, detail=f"Error: {error_msg}")
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 6969))
