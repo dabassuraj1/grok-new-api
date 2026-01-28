@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "name": "grok-api",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
+    },
+    {
+      "src": "/api/info",
+      "dest": "/api/info.js"
+    },
+    {
+      "src": "/",
+      "dest": "/api/info.js"
+    }
+  ],
+  "env": {
+    "GROK_BACKEND_URL": "$GROK_BACKEND_URL"
+  }
+}
