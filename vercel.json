@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "grok-api",
   "builds": [
     {
       "src": "api/**/*.js",
@@ -9,19 +8,18 @@
   ],
   "routes": [
     {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "src": "/api/info",
-      "dest": "/api/info.js"
-    },
-    {
-      "src": "/",
-      "dest": "/api/info.js"
+      "src": "/(.*)",
+      "dest": "/api/index"
     }
   ],
-  "env": {
-    "GROK_BACKEND_URL": "$GROK_BACKEND_URL"
+  "functions": {
+    "api/chat.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
   }
 }
