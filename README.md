@@ -141,6 +141,10 @@ The API includes comprehensive error handling:
 
 Note that the underlying Grok service may have rate limits. For production use, consider implementing additional rate limiting mechanisms.
 
+## Bug Fixes
+
+- Fixed "cannot access local variable 'script_content1' where it is not associated with a value" error by properly initializing variables in the parser module
+
 ## Legal Disclaimer
 
 This tool is intended for educational and research purposes only. Users are responsible for ensuring their use complies with applicable laws and terms of service. The creators are not responsible for any misuse of this technology.

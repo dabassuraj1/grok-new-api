@@ -74,13 +74,17 @@ class Parser:
     
     @staticmethod
     def parse_grok(scripts: list) -> tuple[list, str]:
-        
+
         Parser._load_grok_mapping()
-        
+
         for index in Parser.grok_mapping:
             if index.get("action_script") in scripts:
                 return index["actions"], index["xsid_script"]
-            
+
+        script_content1: str = None
+        script_content2: str = None
+        action_script: str = None
+
         for script in scripts:
             # Try to use the same impersonation as the main session, fallback to chrome124
             try:
@@ -93,19 +97,26 @@ class Parser:
             elif "880932)" in content:
                 script_content2: str = content
 
+        # Check if both variables were found before proceeding
+        if script_content1 is None:
+            raise ValueError("Could not find script containing 'anonPrivateKey'")
+
+        if script_content2 is None:
+            raise ValueError("Could not find script containing '880932)'")
+
         actions: list = findall(r'createServerReference\)\("([a-f0-9]+)"', script_content1)
         xsid_script: str = search(r'"(static/chunks/[^"]+\.js)"[^}]*?\(880932\)', script_content2).group(1)
-        
+
         if actions and xsid_script:
             Parser.grok_mapping.append({
                 "xsid_script": xsid_script,
                 "action_script": action_script,
                 "actions": actions
             })
-            
+
             with open('core/mappings/grok.json', 'w') as f:
                 dump(Parser.grok_mapping, f, indent=2)
-                
+
             return actions, xsid_script
         else:
             print("Something went wrong while parsing script and actions")
