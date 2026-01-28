@@ -1,21 +1,23 @@
 {
-  "name": "grok-api-vercel",
+  "name": "grok-api",
   "version": "1.0.0",
-  "description": "Grok API for Vercel deployment with jailbreak functionality",
+  "description": "Grok API with jailbreak functionality for Vercel deployment",
   "main": "index.js",
   "scripts": {
     "dev": "vercel dev",
-    "build": "next build",
+    "build": "echo 'Build completed'",
     "start": "node server.js",
     "vercel-build": "echo 'Build completed'",
     "test": "node test-api.js",
-    "test-local": "node test-api.js"
+    "test-local": "node test-api.js",
+    "start-api": "python api_server.py"
   },
   "dependencies": {
     "axios": "^1.6.0",
     "express": "^4.18.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "http-proxy-middleware": "^3.0.3"
   },
   "devDependencies": {
     "@vercel/node": "^3.0.0"
@@ -28,6 +30,6 @@
     "ai",
     "chat"
   ],
-  "author": "Grok API",
+  "author": "Grok API Team",
   "license": "MIT"
 }
